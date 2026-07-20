@@ -1,10 +1,24 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        s = "".join(char.lower() for char in s if char.isalnum())
-        s1 = s[::-1]
+        left = 0
+        right = len(s)-1
 
-        if s1==s:
-            return True
-        else:
-            print(s)
-            return False
+        while left < right:
+            while left < right and not self.checkAlphanumeric(s[left]):
+                left+=1
+
+            while left < right and not self.checkAlphanumeric(s[right]):
+                right-=1
+
+            if s[left].lower()!=s[right].lower():
+                return False
+
+            left+=1
+            right-=1
+
+        return True
+
+    def checkAlphanumeric(self, s: str) -> bool:
+        return (ord('0')<=ord(s)<=ord('9') 
+        or ord('A') <= ord(s) <= ord('Z') 
+        or ord('a') <= ord(s) <= ord('z'))
